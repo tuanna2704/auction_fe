@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs, Table, Button } from 'antd';
+import { Tabs, Table, Button, Modal, Form, Input } from 'antd';
 import { IBiddingItem } from "utils/interface";
 import { formatDate } from "utils/caculate";
-import { getBiddingItems } from 'utils/api';
-
+import { getBiddingItems, bid } from 'utils/api';
+import { useDispatch } from 'react-redux';
+import { increaseDepositLock } from 'store/user.reducer';
 const { TabPane } = Tabs;
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('ongoing');
   const [onGoingItems, setOnGoingItems] = useState([]);
   const [completedItems, setCompletedItems] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentBiddingItem, setCurrentBiddingItem] = useState<IBiddingItem>();
+  const [bidPrice, setBidPrice] = useState(0);
 
-  const showModal = (item: IBiddingItem) => {
-    console.log(item);
-  }
+  const showModal = (record: IBiddingItem) => {
+    setIsModalOpen(true);
+    setCurrentBiddingItem(record)
+  };
+
+  const handleOk = async () => {
+    if (typeof currentBiddingItem?.id !== 'number') return;
+
+    const response = await bid(currentBiddingItem?.id, bidPrice);
+
+    if (response.success) {
+      dispatch(increaseDepositLock(bidPrice));
+      handleCancel();
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setCurrentBiddingItem(undefined);
+  };
 
   const BIDDING_COLUMNS = [
     {
@@ -77,6 +99,13 @@ const Dashboard = () => {
           <Table columns={BIDDING_COLUMNS} dataSource={completedItems} />
         </TabPane>
       </Tabs>
+      <Modal title={`Bidding Item ${currentBiddingItem?.name}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <br />
+        <Form.Item label="Bid Price" name="bidPrice" rules={[{ required: true, message: 'Please enter the bid price' }]}>
+          <Input type="number" placeholder="Enter bid price" value={bidPrice}
+              onChange={(e) => setBidPrice(Number(e.target.value))} />
+        </Form.Item>
+      </Modal>
     </div>
   );
 };

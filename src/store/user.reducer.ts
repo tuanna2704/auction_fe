@@ -13,11 +13,14 @@ export const userSlice = createSlice({
     },
     increaseDeposit: (state, action) => {
       state.deposit += action.payload;
+    },
+    increaseDepositLock: (state, action) => {
+      state.totalDepositLock += action.payload;
     }
   }
 });
 
-export const { setUser, increaseDeposit } = userSlice.actions;
+export const { setUser, increaseDeposit, increaseDepositLock } = userSlice.actions;
 
 export const selectUser = (state: IStore) => state.user;
 

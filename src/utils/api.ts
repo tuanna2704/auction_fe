@@ -77,3 +77,17 @@ export const getBiddingItems = async (type: string) => {
     console.error('An error occurred:', error);
   }
 }
+
+export const bid = async (itemId: number, amount: number) => {
+  try {
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API_ENDPOINT}/bidding/create`,
+      { itemId, amount },
+      { headers }
+    );
+
+    return data;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}

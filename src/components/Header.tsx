@@ -41,12 +41,15 @@ const Header = () => {
             <div style={{ width: "40%" }}>
               <Menu mode="horizontal" theme="dark">
                 <Menu.Item key="1">
-                  Lock Deposit: <Badge count={userValue.totalDepositLock} color='red' />
+                  Lock: <Badge count={userValue.totalDepositLock} color='red' />
                 </Menu.Item>
                 <Menu.Item key="2">
-                  Deposit: <Badge count={userValue.deposit} color='green' />
+                  Deposit: <Badge count={userValue.deposit} color='gold' />
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item key="3">
+                  Available: <Badge count={userValue.deposit - userValue.totalDepositLock} color='green' />
+                </Menu.Item>
+                <Menu.Item key="4">
                   <Dropdown overlay={avatarMenu}>
                     <Button shape="circle" icon={<UserOutlined />} />
                   </Dropdown>
