@@ -8,7 +8,6 @@ const { Header: AntdHeader } = Layout;
 
 const Header = () => {
   const userValue = useSelector(selectUser);
-  console.log(userValue);
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('access_token')
 
@@ -42,10 +41,10 @@ const Header = () => {
             <div >
               <Menu mode="horizontal" theme="dark">
                 <Menu.Item key="1">
-                  Lock Deposit: <Badge count={10} color='red' />
+                  Lock Deposit: <Badge count={userValue.totalDepositLock} color='red' />
                 </Menu.Item>
                 <Menu.Item key="2">
-                  Deposit: <Badge count={10} color='green' />
+                  Deposit: <Badge count={userValue.deposit} color='green' />
                 </Menu.Item>
                 <Menu.Item>
                   <Dropdown overlay={avatarMenu}>
