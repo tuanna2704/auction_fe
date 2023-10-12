@@ -6,6 +6,7 @@ import Header from "components/Header";
 import Register from "pages/Register";
 import Login from "pages/Login";
 import AddDeposit from "pages/AddDeposit";
+import CreateBiddingItem from "pages/CreateBiddingItem";
 import { useEffect } from "react";
 import { getUserInfo } from "utils/api";
 import { useDispatch } from "react-redux";
@@ -61,7 +62,7 @@ function App() {
             <Route index element={<>Home</>} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            <Route path="create-item" element={<>Create Item Page</>} />
+            <Route path="create-item" element={<CreateBiddingItem />} />
             <Route path="add-deposit" element={<AddDeposit />} />
             <Route path="*" element={<>Not Found Page</>} />
           </Route>
