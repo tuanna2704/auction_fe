@@ -1,17 +1,14 @@
 import React from 'react';
 import { Form, Input, Button, Modal, DatePicker, Checkbox } from 'antd';
 import { createBiddingItem } from 'utils/api';
-import { useDispatch } from 'react-redux';
 import { BiddingItemStateType } from 'utils/interface';
 import { formatDateToISO8601WithoutTime } from 'utils/caculate';
 
 const CreateBiddingItem = () => {
-  const dispatch = useDispatch()
   const [modal, contextHolder] = Modal.useModal();
   const [form] = Form.useForm();
 
   const onFinish = async ({ publish, name, price, dateRange}: { publish: boolean, name: string, price: number, dateRange: [{$d: Date}, {$d: Date}] }) => {
-    console.log(dateRange)
     const formatedValues = {
       state: (publish ? 'PUBLISHED' : 'DRAFT') as BiddingItemStateType,
       name,

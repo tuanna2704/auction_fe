@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IRegisterUser, ICreateBiddingItemInput } from "utils/interface";
+import { formatDate } from "./caculate";
 
 const headers  = {
   'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -55,6 +56,19 @@ export const createBiddingItem = async (createItemInput: ICreateBiddingItemInput
     const { data } = await axios.post(
       `${process.env.REACT_APP_API_ENDPOINT}/bidding/item/create`,
       { item: createItemInput },
+      { headers }
+    );
+
+    return data;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+export const getBiddingItems = async (type: string) => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_ENDPOINT}/bidding/item/${type}?endTime=${formatDate(new Date())}`,
       { headers }
     );
 

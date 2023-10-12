@@ -9,7 +9,16 @@ export interface ICreateBiddingItemInput {
   startPrice: number;
   startTime: string;
   endTime: string;
-  state: 'PUBLISHED' | 'DRAFT';
+  state: BiddingItemStateType;
+}
+
+export interface IBiddingItem {
+  id: number;
+  startPrice: number;
+  name: string;
+  state: BiddingItemStateType;
+  startTime: string;
+  endTime: string;
 }
 
 export type BiddingItemStateType = 'PUBLISHED' | 'DRAFT';

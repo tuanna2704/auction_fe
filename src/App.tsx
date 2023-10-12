@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Header from "components/Header";
 import Register from "pages/Register";
 import Login from "pages/Login";
+import Dashboard from "pages/Dashboard";
 import AddDeposit from "pages/AddDeposit";
 import CreateBiddingItem from "pages/CreateBiddingItem";
 import { useEffect } from "react";
@@ -59,7 +60,7 @@ function App() {
       <Provider store={store} >
         <Routes>
           <Route path="/" element={<BaseLayout />}>
-            <Route index element={<>Home</>} />
+            <Route index element={<Dashboard />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="create-item" element={<CreateBiddingItem />} />
