@@ -1,23 +1,15 @@
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
+import Header from "components/Header";
 import Register from "pages/Register";
 import Login from "pages/Login";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const BaseLayout = () => {
   return (
     <Layout className="layout" style={{ height: '100vh' }}>
-      <Header>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal">
-          <Menu.Item key="1"><Link to="/">Dashboard</Link></Menu.Item>
-          <Menu.Item key="2"><Link to="/create-item">Create Item</Link></Menu.Item>
-          <Menu.Item key="3"><Link to="/add-deposit">Deposit</Link></Menu.Item>
-          <Menu.Item key="4"><Link to="/register">Register</Link></Menu.Item>
-          <Menu.Item key="5"><Link to="/login">Login</Link></Menu.Item>
-        </Menu>
-      </Header>
+      <Header />
       <Content style={{ padding: '0 50px', height: 'calc(100vh - 64px)' }}>
         <div className="site-layout-content" style={{ minHeight: 'calc(100vh - 138px)' }}>
           <div className="content">
