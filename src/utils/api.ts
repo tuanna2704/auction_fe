@@ -35,3 +35,17 @@ export const getUserInfo = async () => {
     console.error('An error occurred:', error);
   }
 }
+
+export const addDeposit = async (amount: number) => {
+  try {
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API_ENDPOINT}/bidding/recharge`,
+      { amount },
+      { headers }
+    );
+
+    return data;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}

@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Header from "components/Header";
 import Register from "pages/Register";
 import Login from "pages/Login";
+import AddDeposit from "pages/AddDeposit";
 import { useEffect } from "react";
 import { getUserInfo } from "utils/api";
 import { useDispatch } from "react-redux";
@@ -31,7 +32,7 @@ const BaseLayout = () => {
 
   useEffect(() => {
     bootstrap();
-  },[]);
+  }, []);
 
   return (
     <Layout className="layout" style={{ height: '100vh' }}>
@@ -61,7 +62,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="create-item" element={<>Create Item Page</>} />
-            <Route path="add-deposit" element={<>Add Deposit Page</>} />
+            <Route path="add-deposit" element={<AddDeposit />} />
             <Route path="*" element={<>Not Found Page</>} />
           </Route>
         </Routes>

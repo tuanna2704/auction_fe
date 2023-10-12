@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Menu, Dropdown, Button, Badge } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectUser } from 'store/user.reducer';
 const { Header: AntdHeader } = Layout;
 
@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <AntdHeader>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: "70%" }}>
+        <div style={{ width: "60%" }}>
           <Menu theme="dark" mode="horizontal">
             {isLoggedIn && <Menu.Item key="1"><Link to="/">Dashboard</Link></Menu.Item>}
             {isLoggedIn && <Menu.Item key="2"><Link to="/create-item">Create Item</Link></Menu.Item>}
@@ -38,7 +38,7 @@ const Header = () => {
         </div>
         {isLoggedIn &&
           (
-            <div >
+            <div style={{ width: "40%" }}>
               <Menu mode="horizontal" theme="dark">
                 <Menu.Item key="1">
                   Lock Deposit: <Badge count={userValue.totalDepositLock} color='red' />
