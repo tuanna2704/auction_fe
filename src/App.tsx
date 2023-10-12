@@ -1,5 +1,7 @@
-import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Layout } from 'antd';
+import store from "store";
+import { Provider } from "react-redux";
 import Header from "components/Header";
 import Register from "pages/Register";
 import Login from "pages/Login";
@@ -28,16 +30,18 @@ const BaseLayout = () => {
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<BaseLayout />}>
-          <Route index element={<>Home</>} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-          <Route path="create-item" element={<>Create Item Page</>} />
-          <Route path="add-deposit" element={<>Add Deposit Page</>} />
-          <Route path="*" element={<>Not Found Page</>} />
-        </Route>
-      </Routes>
+      <Provider store={store} >
+        <Routes>
+          <Route path="/" element={<BaseLayout />}>
+            <Route index element={<>Home</>} />
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route path="create-item" element={<>Create Item Page</>} />
+            <Route path="add-deposit" element={<>Add Deposit Page</>} />
+            <Route path="*" element={<>Not Found Page</>} />
+          </Route>
+        </Routes>
+      </Provider>
     </BrowserRouter>
   )
 }

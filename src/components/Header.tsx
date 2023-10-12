@@ -1,11 +1,14 @@
 import React from 'react';
-import { Layout, Menu, Dropdown, Button } from 'antd';
+import { Layout, Menu, Dropdown, Button, Badge } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser } from 'store/user.reducer';
 const { Header: AntdHeader } = Layout;
 
 const Header = () => {
+  const userValue = useSelector(selectUser);
+  console.log(userValue);
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('access_token')
 
@@ -36,10 +39,20 @@ const Header = () => {
         </div>
         {isLoggedIn &&
           (
-            <div>
-              <Dropdown overlay={avatarMenu}>
-                <Button shape="circle" icon={<UserOutlined />} />
-              </Dropdown>
+            <div >
+              <Menu mode="horizontal" theme="dark">
+                <Menu.Item key="1">
+                  Lock Deposit: <Badge count={10} color='red' />
+                </Menu.Item>
+                <Menu.Item key="2">
+                  Deposit: <Badge count={10} color='green' />
+                </Menu.Item>
+                <Menu.Item>
+                  <Dropdown overlay={avatarMenu}>
+                    <Button shape="circle" icon={<UserOutlined />} />
+                  </Dropdown>
+                </Menu.Item>
+              </Menu>
             </div>
           )
         }
