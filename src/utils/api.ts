@@ -10,3 +10,13 @@ export const registerUser = async (values: IRegisterUser) => {
     console.error('An error occurred:', error);
   }
 }
+
+export const signIn = async (values: IRegisterUser) => {
+  try {
+    const { data } = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/auth/signin`, {user: values});
+
+    return data;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}

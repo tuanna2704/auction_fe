@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import { Layout, Menu } from 'antd';
 import Register from "pages/Register";
+import Login from "pages/Login";
 
 const { Header, Content, Footer } = Layout;
 
@@ -39,7 +40,7 @@ function App() {
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<>Home</>} />
           <Route path="register" element={<Register />} />
-          <Route path="login" element={<>Login Page</>} />
+          <Route path="login" element={<Login />} />
           <Route path="create-item" element={<>Create Item Page</>} />
           <Route path="add-deposit" element={<>Add Deposit Page</>} />
           <Route path="*" element={<>Not Found Page</>} />
