@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Dropdown, Button, Badge } from 'antd';
+import type { MenuProps } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -16,13 +17,19 @@ const Header = () => {
     return navigate('/login');
   }
 
-  const avatarMenu = (
-    <Menu onClick={logout}>
-      <Menu.Item key="logout">
-        <LogoutOutlined /> Logout
-      </Menu.Item>
-    </Menu>
-  );
+  const items: MenuProps['items'] = [
+    {
+      label: userValue.name,
+      key: '0',
+    },
+    { type: 'divider' },
+    {
+      label: (
+        <Button type="link" onClick={logout}> <LogoutOutlined /> Logout</Button>
+      ),
+      key: '1',
+    },
+  ];
 
   return (
     <AntdHeader>
@@ -50,7 +57,7 @@ const Header = () => {
                   Available: <Badge count={userValue.deposit - userValue.totalDepositLock} color='green' />
                 </Menu.Item>
                 <Menu.Item key="4">
-                  <Dropdown overlay={avatarMenu}>
+                  <Dropdown menu={{ items }}>
                     <Button shape="circle" icon={<UserOutlined />} />
                   </Dropdown>
                 </Menu.Item>
