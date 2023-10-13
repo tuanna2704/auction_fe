@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs, Table, Button, Modal, Form, Input } from 'antd';
+import { Tabs, Table, Button, Modal, Form, Input, message } from 'antd';
 import { IBiddingItem } from "utils/interface";
 import { formatDate } from "utils/caculate";
 import { getBiddingItems, bid } from 'utils/api';
@@ -9,6 +9,7 @@ const { TabPane } = Tabs;
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const [messageApi, contextHolder] = message.useMessage();
   const [activeTab, setActiveTab] = useState('ongoing');
   const [onGoingItems, setOnGoingItems] = useState([]);
   const [completedItems, setCompletedItems] = useState([]);
@@ -29,6 +30,15 @@ const Dashboard = () => {
     if (response.success) {
       dispatch(increaseDepositLock(bidPrice));
       handleCancel();
+      messageApi.open({
+        type: 'success',
+        content: `Bidding Item ${currentBiddingItem.name} with price ${bidPrice} Successfully!`,
+      });
+    } else {
+      messageApi.open({
+        type: 'error',
+        content: response.message,
+      });
     }
   };
 
@@ -111,6 +121,7 @@ const Dashboard = () => {
               onChange={(e) => setBidPrice(Number(e.target.value))} />
         </Form.Item>
       </Modal>
+      {contextHolder}
     </div>
   );
 };
