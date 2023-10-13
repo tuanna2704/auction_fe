@@ -47,6 +47,9 @@ const Dashboard = () => {
       title: 'Current Price',
       dataIndex: 'startPrice',
       key: 'startPrice',
+      render: (text: string, record: IBiddingItem) => {
+        return record.depositLock[0]?.amount || record.startPrice
+      },
     },
     {
       title: 'Duration',
@@ -63,7 +66,9 @@ const Dashboard = () => {
       dataIndex: 'bid',
       key: 'bid',
       render: (text: string, record: IBiddingItem) => {
-        const canBid = new Date(record.endTime) > new Date();
+        const currentDate = (new Date()).toISOString().split('T')[0];
+        const endBidDate = new Date(record.endTime.split('T')[0]);
+        const canBid = endBidDate >= new Date(currentDate);
         return canBid && <Button type="primary" onClick={() => showModal(record)}>Bid</Button>
       },
     },

@@ -12,6 +12,11 @@ export interface ICreateBiddingItemInput {
   state: BiddingItemStateType;
 }
 
+export interface IDepositLock {
+  id: number;
+  amount: number;
+}
+
 export interface IBiddingItem {
   id: number;
   startPrice: number;
@@ -19,6 +24,7 @@ export interface IBiddingItem {
   state: BiddingItemStateType;
   startTime: string;
   endTime: string;
+  depositLock: IDepositLock[];
 }
 
 export type BiddingItemStateType = 'PUBLISHED' | 'DRAFT';
