@@ -19,6 +19,7 @@ export interface IDepositLock {
 
 export interface IBiddingItem {
   id: number;
+  userId: number;
   startPrice: number;
   name: string;
   state: BiddingItemStateType;

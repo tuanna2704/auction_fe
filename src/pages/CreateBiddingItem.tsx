@@ -18,7 +18,7 @@ const CreateBiddingItem = () => {
     }
     const response = await createBiddingItem(formatedValues);
 
-    if (response.success) {
+    if (response?.success) {
       modal.success({
         title: 'Create Item Success',
         content: <></>
@@ -26,7 +26,7 @@ const CreateBiddingItem = () => {
       form.resetFields();
     } else {
       await modal.error({
-        content: <>{response.message}</>
+        content: <>{response?.message}</>
       });
     }
   };

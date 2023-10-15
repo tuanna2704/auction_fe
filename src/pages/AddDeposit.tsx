@@ -22,7 +22,7 @@ const AddDeposit = () => {
   const onFinish = async ({ amount }: {amount: number}) => {
     const response = await addDeposit(Number(amount));
 
-    if (response.success) {
+    if (response?.success) {
       modal.success({
         title: 'Add Deposit Success',
         content: <></>
@@ -31,7 +31,7 @@ const AddDeposit = () => {
       form.resetFields();
     } else {
       await modal.error({
-        content: <>{response.message}</>
+        content: <>{response?.message}</>
       });
     }
   };

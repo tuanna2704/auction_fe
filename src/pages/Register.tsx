@@ -13,7 +13,7 @@ const Register = () => {
   const onFinish = async (values: IRegisterUser) => {
     const response = await registerUser(values);
     
-    if (response.success) {
+    if (response?.success) {
       const confirmed = await modal.success({
         title: 'Create Account Successful',
         content: <>You Can Login Now!</>
@@ -24,7 +24,7 @@ const Register = () => {
     } else {
       await modal.error({
         title: 'Create Account Failure',
-        content: <>{response.message}</>
+        content: <>{response?.message}</>
       });
     }
   };

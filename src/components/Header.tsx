@@ -1,19 +1,22 @@
 import React from 'react';
 import { Layout, Menu, Dropdown, Button, Badge } from 'antd';
 import type { MenuProps } from 'antd';
+import { useDispatch } from "react-redux";
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { selectUser } from 'store/user.reducer';
+import { selectUser, resetUser } from 'store/user.reducer';
 const { Header: AntdHeader } = Layout;
 
 const Header = () => {
+  const dispatch = useDispatch();
   const userValue = useSelector(selectUser);
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('access_token')
 
   const logout = () => {
     localStorage.removeItem('access_token');
+    dispatch(resetUser());
     return navigate('/login');
   }
 
@@ -48,13 +51,13 @@ const Header = () => {
             <div style={{ width: "40%" }}>
               <Menu mode="horizontal" theme="dark">
                 <Menu.Item key="1">
-                  Lock: <Badge count={userValue.totalDepositLock} color='red' />
+                  Lock: <Badge count={userValue.totalDepositLock} color='red' overflowCount={9999} />
                 </Menu.Item>
                 <Menu.Item key="2">
-                  Deposit: <Badge count={userValue.deposit} color='gold' />
+                  Deposit: <Badge count={userValue.deposit} color='gold' overflowCount={9999} />
                 </Menu.Item>
                 <Menu.Item key="3">
-                  Available: <Badge count={userValue.deposit - userValue.totalDepositLock} color='green' />
+                  Available: <Badge count={userValue.deposit - userValue.totalDepositLock} color='green' overflowCount={9999} />
                 </Menu.Item>
                 <Menu.Item key="4">
                   <Dropdown menu={{ items }}>

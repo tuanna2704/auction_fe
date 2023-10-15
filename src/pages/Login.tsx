@@ -2,10 +2,13 @@ import React from 'react';
 import { Form, Input, Button, Modal } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { signIn } from 'utils/api';
+import { signIn, getUserInfo } from 'utils/api';
 import { IRegisterUser } from 'utils/interface';
+import { useDispatch } from 'react-redux';
+import { setUser } from 'store/user.reducer';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [modal, contextHolder] = Modal.useModal();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -13,12 +16,16 @@ const Login = () => {
   const onFinish = async (values: IRegisterUser) => {
     const response = await signIn(values);
 
-    if (response.success) {
+    if (response?.success) {
       localStorage.setItem('access_token', response.access_token);
+      const res = await getUserInfo();
+      if (res.id) {
+        dispatch(setUser(res));
+      }
       return navigate('/');
     } else {
       await modal.error({
-        content: <>{response.message}</>
+        content: <>{response?.message}</>
       });
     }
   };
