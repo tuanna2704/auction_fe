@@ -32,7 +32,7 @@ const Dashboard = () => {
     const response = await finishBidding(record.id);
 
     if (response[0]?.count) {
-      const [count, winner, ...biddingUsers] = response;
+      const [, winner, ...biddingUsers] = response;
       setIsModalFinishBiddingSuccess(true);
       setContent(`${winner.name} is successfully bid. Refunded for ${biddingUsers.map((user: {name: string}) => user.name).join(', ')}`);
       await getItems('ongoing');

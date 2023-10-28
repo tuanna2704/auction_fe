@@ -1,77 +1,120 @@
-import React from 'react';
-import { Layout, Menu, Dropdown, Button, Badge } from 'antd';
-import type { MenuProps } from 'antd';
+import React from "react";
+import { Layout, Menu, Dropdown, Button, Badge } from "antd";
+import { googleLogout } from "@react-oauth/google";
+import type { MenuProps } from "antd";
 import { useDispatch } from "react-redux";
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { selectUser, resetUser } from 'store/user.reducer';
+import { useSelector } from "react-redux";
+import { selectUser, resetUser } from "store/user.reducer";
 const { Header: AntdHeader } = Layout;
 
 const Header = () => {
   const dispatch = useDispatch();
   const userValue = useSelector(selectUser);
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem('access_token')
+  const isLoggedIn = !!localStorage.getItem("access_token");
 
   const logout = () => {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem("access_token");
     dispatch(resetUser());
-    return navigate('/login');
-  }
+    googleLogout();
+    return navigate("/login");
+  };
 
-  const items: MenuProps['items'] = [
+  const items: MenuProps["items"] = [
     {
       label: userValue.name,
-      key: '0',
+      key: "0",
     },
-    { type: 'divider' },
+    { type: "divider" },
     {
       label: (
-        <Button type="link" onClick={logout}> <LogoutOutlined /> Logout</Button>
+        <Button type="link" onClick={logout}>
+          {" "}
+          <LogoutOutlined /> Logout
+        </Button>
       ),
-      key: '1',
+      key: "1",
     },
   ];
 
   return (
     <AntdHeader>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ width: "60%" }}>
-          <Menu theme="dark" mode="horizontal">
-            {isLoggedIn && <Menu.Item key="1"><Link to="/">Dashboard</Link></Menu.Item>}
-            {isLoggedIn && <Menu.Item key="2"><Link to="/create-item">Create Item</Link></Menu.Item>}
-            {isLoggedIn && <Menu.Item key="3"><Link to="/add-deposit">Deposit</Link></Menu.Item>}
-            {!isLoggedIn && <Menu.Item key="4"><Link to="/register">Register</Link></Menu.Item>}
-            {!isLoggedIn && <Menu.Item key="5"><Link to="/login">Login</Link></Menu.Item>}
-          </Menu>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            items={[
+              { key: "1", label: <Link to="/">Dashboard</Link> },
+              { key: "2", label: <Link to="/create-item">Create Item</Link> },
+              { key: "3", label: <Link to="/add-deposit">Deposit</Link> },
+              { key: "4", label: <Link to="/register">Register</Link> },
+              { key: "5", label: <Link to="/login">Login</Link> },
+            ]}
+          />
         </div>
-        {isLoggedIn &&
-          (
-            <div style={{ width: "40%" }}>
-              <Menu mode="horizontal" theme="dark">
-                <Menu.Item key="1">
-                  Lock: <Badge count={userValue.totalDepositLock} color='red' overflowCount={9999} />
-                </Menu.Item>
-                <Menu.Item key="2">
-                  Deposit: <Badge count={userValue.deposit} color='gold' overflowCount={9999} />
-                </Menu.Item>
-                <Menu.Item key="3">
-                  Available: <Badge count={userValue.deposit - userValue.totalDepositLock} color='green' overflowCount={9999} />
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Dropdown menu={{ items }}>
-                    <Button shape="circle" icon={<UserOutlined />} />
-                  </Dropdown>
-                </Menu.Item>
-              </Menu>
-            </div>
-          )
-        }
-
+        {isLoggedIn && (
+          <div style={{ width: "40%" }}>
+            <Menu
+              mode="horizontal"
+              theme="dark"
+              items={[
+                {
+                  key: "1",
+                  label: (
+                    <>
+                      Lock:{" "}
+                      <Badge
+                        count={userValue.totalDepositLock}
+                        color="red"
+                        overflowCount={9999}
+                      />
+                    </>
+                  ),
+                },
+                {
+                  key: "2",
+                  label: (
+                    <>
+                      Deposit:{" "}
+                      <Badge
+                        count={userValue.deposit}
+                        color="gold"
+                        overflowCount={9999}
+                      />
+                    </>
+                  ),
+                },
+                {
+                  key: "3",
+                  label: (
+                    <>
+                      Available:{" "}
+                      <Badge
+                        count={userValue.deposit - userValue.totalDepositLock}
+                        color="green"
+                        overflowCount={9999}
+                      />
+                    </>
+                  ),
+                },
+                {
+                  key: "4",
+                  label: (
+                    <Dropdown menu={{ items }}>
+                      <Button shape="circle" icon={<UserOutlined />} />
+                    </Dropdown>
+                  ),
+                },
+              ]}
+            />
+          </div>
+        )}
       </div>
     </AntdHeader>
-  )
-}
+  );
+};
 
 export default Header;

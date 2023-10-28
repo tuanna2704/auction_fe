@@ -5,7 +5,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     deposit: 0,
-    totalDepositLock: 0
+    totalDepositLock: 0,
+    name: ''
   },
   reducers: {
     setUser: (state, action) => {
@@ -20,7 +21,8 @@ export const userSlice = createSlice({
     resetUser: (state) => {
       return {
         deposit: 0,
-        totalDepositLock: 0
+        totalDepositLock: 0,
+        name: ''
       }
     },
   }

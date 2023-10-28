@@ -26,6 +26,16 @@ export const signIn = async (values: IRegisterUser) => {
   }
 }
 
+export const signInWithGoogle = async (credential?: string) => {
+  try {
+    const { data } = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/auth/google-signin`, { credential });
+
+    return data;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
 export const getUserInfo = async () => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/auth/info`, {}, {

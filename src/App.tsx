@@ -1,5 +1,12 @@
-import { BrowserRouter, Routes, Route, Outlet, useNavigate } from "react-router-dom";
-import { Layout } from 'antd';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { Layout } from "antd";
 import store from "store";
 import { Provider } from "react-redux";
 import Header from "components/Header";
@@ -20,7 +27,7 @@ const BaseLayout = () => {
   const navigate = useNavigate();
 
   const bootstrap = async () => {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem("access_token");
 
     if (accessToken) {
       const response = await getUserInfo();
@@ -28,49 +35,56 @@ const BaseLayout = () => {
         dispatch(setUser(response));
       }
     } else {
-      navigate('/login');
+      navigate("/login");
     }
-  }
+  };
 
   useEffect(() => {
     bootstrap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Layout className="layout" style={{ height: '100vh' }}>
+    <Layout className="layout" style={{ height: "100vh" }}>
       <Header />
-      <Content style={{ padding: '0 50px', height: 'calc(100vh - 64px)' }}>
-        <div className="site-layout-content" style={{ minHeight: 'calc(100vh - 138px)' }}>
+      <Content style={{ padding: "0 50px", height: "calc(100vh - 64px)" }}>
+        <div
+          className="site-layout-content"
+          style={{ minHeight: "calc(100vh - 138px)" }}
+        >
           <div className="content">
             <Outlet />
           </div>
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer style={{ textAlign: "center" }}>
         &copy; {new Date().getFullYear()} Your Website Name
       </Footer>
     </Layout>
-  )
-}
-
+  );
+};
 
 function App() {
   return (
     <BrowserRouter>
-      <Provider store={store} >
-        <Routes>
-          <Route path="/" element={<BaseLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
-            <Route path="create-item" element={<CreateBiddingItem />} />
-            <Route path="add-deposit" element={<AddDeposit />} />
-            <Route path="*" element={<>Not Found Page</>} />
-          </Route>
-        </Routes>
-      </Provider>
+      <GoogleOAuthProvider
+        clientId={process.env.REACT_APP_GG_CLIENT_ID as string}
+      >
+        <Provider store={store}>
+          <Routes>
+            <Route path="/" element={<BaseLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="register" element={<Register />} />
+              <Route path="login" element={<Login />} />
+              <Route path="create-item" element={<CreateBiddingItem />} />
+              <Route path="add-deposit" element={<AddDeposit />} />
+              <Route path="*" element={<>Not Found Page</>} />
+            </Route>
+          </Routes>
+        </Provider>
+      </GoogleOAuthProvider>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;
